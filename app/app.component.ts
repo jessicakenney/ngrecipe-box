@@ -8,12 +8,16 @@ import { Component } from '@angular/core';
     <h3> {{currentFocus}} </h3>
     <h4> {{month}}/{{day}}/{{year}} </h4>
       <div *ngFor = "let thisRecipe of recipes" >
-          <h4> {{thisRecipe.title}} </h4>
-          <h5> Ingredients: </h5>
-            <li *ngFor = "let ingredient of thisRecipe.ingredients">{{ingredient}}</li>
-          <h5> Directions: </h5>
-            <li *ngFor = "let direction of thisRecipe.directions">{{direction}}</li>
+          <h4 (click)= "showRecipe(thisRecipe)"> {{thisRecipe.title}} </h4>
       </div>
+
+          <div *ngIf = "selectedRecipe">
+            <h5> Ingredients: </h5>
+              <li *ngFor = "let ingredient of selectedRecipe.ingredients">{{ingredient}}</li>
+            <h5> Directions: </h5>
+              <li *ngFor = "let direction of selectedRecipe.directions">{{direction}}</li>
+          </div>
+
       <br>
   </div>
   `
@@ -30,6 +34,10 @@ export class AppComponent{
     new Recipe('Scrambled Eggs',['eggs','milk','S+P'],['1.crack','2.beat','3.scramble']),
     new Recipe('Bread',['flour','water','yeast','honey'],['1.mix','2.knead','3.rise','4.bake'])
   ];
+  selectedRecipe: Recipe = null;
+  showRecipe(clickedRecipe){
+    this.selectedRecipe = clickedRecipe;
+  }
 }
 
 export class Recipe {
